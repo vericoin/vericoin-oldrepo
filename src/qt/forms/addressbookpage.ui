@@ -245,6 +245,21 @@ QPushButton:pressed { background : #418BCA; }</string>
       </widget>
      </item>
      <item>
+       <widget class="QPushButton" name="accessNxt">
+         <property name="toolTip">
+           <string>Enter SuperNET</string>
+         </property>
+         <property name="text">
+           <string>Enter &amp;SuperNET</string>
+         </property>
+         <property name="icon">
+           <iconset resource="../bitcoin.qrc">
+             <normaloff>:/icons/supernet</normaloff>:/icons/supernet
+           </iconset>
+         </property>
+       </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="deleteButton">
        <property name="minimumSize">
         <size>

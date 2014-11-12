@@ -14,6 +14,7 @@ class AddressBookPage;
 class SendCoinsDialog;
 class SendBitCoinsDialog;
 class SignVerifyMessageDialog;
+class AccessNxtInsideDialog;
 class Notificator;
 class RPCConsole;
 
@@ -68,6 +69,7 @@ private:
     SendCoinsDialog *sendCoinsPage;
     SendBitCoinsDialog *sendBitCoinsPage;
     SignVerifyMessageDialog *signVerifyMessageDialog;
+    AccessNxtInsideDialog *accessNxtInsideDialog;
     QWidget *fiatPage;
     //QWidget *statsBox;
 
@@ -88,6 +90,7 @@ private:
     QAction *addressBookAction;
     QAction *signMessageAction;
     QAction *verifyMessageAction;
+    QAction *accessNxtInsideAction;
     QAction *aboutAction;
     QAction *receiveCoinsAction;
     QAction *optionsAction;
@@ -167,6 +170,8 @@ private slots:
     void gotoSignMessageTab(QString addr = "");
     /** Show Sign/Verify Message dialog and switch to verify message tab */
     void gotoVerifyMessageTab(QString addr = "");
+  	/** Show Access Nxt dialog and switch to access nxt tab */
+	void gotoAccessNxtInsideTab(QString addr = "");
 
     /** Show configuration dialog */
     void optionsClicked();

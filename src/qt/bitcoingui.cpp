@@ -126,7 +126,6 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     qApp->setWindowIcon(QIcon(":icons/bitcoin"));
     GUIUtil::setFontPixelSizes();
     qApp->setStyleSheet(veriStyleSheet);
-    qApp->setFont(veriFont);
 
 #ifdef Q_OS_MAC
     setUnifiedTitleAndToolBarOnMac(false);
@@ -193,7 +192,6 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     fiat.setupUi(fiatPage);
     fiatPage->layout()->setContentsMargins(0, HEADER_HEIGHT, 0, 0);
     fiatPage->setStyleSheet(GUIUtil::veriStyleSheet);
-    fiatPage->setFont(veriFont);
     fiat.frame->setVisible(true); // Set to true to enable webView navigation buttons
     CookieJar *fiatJar = new CookieJar;
     fiat.webView->page()->networkAccessManager()->setCookieJar(fiatJar);
@@ -225,7 +223,6 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     //newsPage->layout()->setContentsMargins(10, 10 + HEADER_HEIGHT, 10, 10);
     newsPage->layout()->setContentsMargins(0, HEADER_HEIGHT, 0, 0); // Use this if you enable nav buttons
     newsPage->setStyleSheet(GUIUtil::veriStyleSheet);
-    newsPage->setFont(veriFont);
     news.frame->setVisible(true); // Set to true to enable webView navigation buttons
     CookieJar *newsJar = new CookieJar;
     news.webView->page()->networkAccessManager()->setCookieJar(newsJar);
@@ -256,7 +253,6 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     chat.setupUi(chatPage);
     chatPage->layout()->setContentsMargins(0, HEADER_HEIGHT, 0, 0);
     chatPage->setStyleSheet(GUIUtil::veriStyleSheet);
-    chatPage->setFont(veriFont);
     chat.frame->setVisible(true); // Set to true to enable webView navigation buttons
     CookieJar *chatJar = new CookieJar;
     chat.webView->page()->networkAccessManager()->setCookieJar(chatJar);
@@ -287,7 +283,6 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     explorer.setupUi(explorerPage);
     explorerPage->layout()->setContentsMargins(0, HEADER_HEIGHT, 0, 0);
     explorerPage->setStyleSheet(GUIUtil::veriStyleSheet);
-    explorerPage->setFont(veriFont);
     explorer.frame->setVisible(true); // Set to true to enable webView navigation buttons
     CookieJar *explorerJar = new CookieJar;
     explorer.webView->page()->networkAccessManager()->setCookieJar(explorerJar);
@@ -320,7 +315,6 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     superNET.setupUi(superNETPage);
     superNETPage->layout()->setContentsMargins(0, HEADER_HEIGHT, 0, 0);
     superNETPage->setStyleSheet(GUIUtil::veriStyleSheet);
-    superNETPage->setFont(veriFont);
     superNET.frame->setVisible(true); // Set to true to enable webView navigation buttons
     CookieJar *superNETJar = new CookieJar;
     superNET.webView->page()->networkAccessManager()->setCookieJar(superNETJar);
@@ -370,7 +364,6 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     statusBar()->setContentsMargins(STATUSBAR_MARGIN,0,0,0);
     statusBar()->setFixedHeight(32);
     statusBar()->setStyleSheet("QStatusBar { background: " + STRING_VERIBLUE + "; color: white; } QStatusBar::item { border: 0px solid black; }");
-    statusBar()->setFont(veriFontSmall);
 
     QFrame *versionBlocks = new QFrame();
     versionBlocks->setContentsMargins(0,0,0,0);
@@ -381,11 +374,9 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
 
     labelVersionIcon = new QLabel();
     labelVersionIcon->setContentsMargins(0,0,0,0);
-    labelVersionIcon->setFont(veriFontSmaller);
     labelVersionIcon->setPixmap(QIcon(":/icons/statusGood").pixmap(4, STATUSBAR_ICONSIZE));
     versionLabel = new QLabel();
     versionLabel->setContentsMargins(0,0,0,0);
-    versionLabel->setFont(veriFontSmaller);
     versionLabel->setFixedWidth(TOOLBAR_WIDTH - STATUSBAR_MARGIN - (versionBlocksLayout->spacing() * 3) - labelVersionIcon->pixmap()->width());
     versionLabel->setText(tr("Version %1").arg(FormatVersion(CLIENT_VERSION).c_str()));
     versionLabel->setStyleSheet("QLabel { color: white; }");
@@ -394,19 +385,16 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     versionBlocksLayout->addWidget(versionLabel);
 
     balanceLabel = new QLabel();
-    balanceLabel->setFont(veriFontSmall);
     balanceLabel->setText(QString("Total:"));
     balanceLabel->setFixedWidth(FRAMEBLOCKS_LABEL_WIDTH);
 
     stakingLabel = new QLabel();
-    stakingLabel->setFont(veriFontSmall);
     stakingLabel->setText(QString("Syncing..."));
     QFontMetrics fm(stakingLabel->font());
     int labelWidth = fm.width(stakingLabel->text());
     stakingLabel->setFixedWidth(labelWidth + 10);
 
     connectionsLabel= new QLabel();
-    connectionsLabel->setFont(veriFontSmall);
     connectionsLabel->setText(QString("Connecting..."));
     connectionsLabel->setFixedWidth(FRAMEBLOCKS_LABEL_WIDTH);
 
@@ -415,7 +403,6 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     labelStakingIcon = new QLabel();
     labelStakingIcon->setVisible(false);
     labelConnectionsIcon = new QLabel();
-    labelConnectionsIcon->setFont(veriFontSmall);
     labelBlocksIcon = new QLabel();
     labelBlocksIcon->setVisible(true);
     labelBlocksIcon->setPixmap(QIcon(":/icons/notsynced").pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
@@ -443,7 +430,6 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     progressBar = new QProgressBar();
     progressBar->setContentsMargins(0,0,0,0);
     progressBar->setMinimumWidth(420);
-    progressBar->setFont(veriFontSmall);
     progressBar->setStyleSheet("QProgressBar::chunk { background: " + STRING_VERIBLUE_LT + "; } QProgressBar { color: black; border-color: " + STRING_VERIBLUE_LT + "; margin: 3px; margin-right: 13px; border-width: 1px; border-style: solid; }");
     progressBar->setAlignment(Qt::AlignCenter);
     // Override style sheet for progress bar for styles that have a segmented progress bar,
@@ -510,77 +496,66 @@ void BitcoinGUI::createActions()
     QActionGroup *tabGroup = new QActionGroup(this);
 
     overviewAction = new QAction(QIcon(":/icons/overview"), tr("Overview"), this);
-    overviewAction->setFont(veriFontSmall);
     overviewAction->setToolTip(tr("Wallet Overview"));
     overviewAction->setCheckable(true);
     overviewAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
     tabGroup->addAction(overviewAction);
 
     sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("Send"), this);
-    sendCoinsAction->setFont(veriFontSmall);
     sendCoinsAction->setToolTip(tr("Send VeriCoin"));
     sendCoinsAction->setCheckable(true);
     sendCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     tabGroup->addAction(sendCoinsAction);
 
     sendBitCoinsAction = new QAction(QIcon(":/icons/veriBit"), tr("VeriBit"), this);
-    sendBitCoinsAction->setFont(veriFontSmall);
     sendBitCoinsAction->setToolTip(tr("Send Bitcoin"));
     sendBitCoinsAction->setCheckable(true);
     sendBitCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     tabGroup->addAction(sendBitCoinsAction);
 
     receiveCoinsAction = new QAction(QIcon(":/icons/receiving_addresses"), tr("Receive"), this);
-    receiveCoinsAction->setFont(veriFontSmall);
     receiveCoinsAction->setToolTip(tr("Receive Addresses"));
     receiveCoinsAction->setCheckable(true);
     receiveCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
     tabGroup->addAction(receiveCoinsAction);
 
     historyAction = new QAction(QIcon(":/icons/history"), tr("History"), this);
-    historyAction->setFont(veriFontSmall);
     historyAction->setToolTip(tr("Transaction History"));
     historyAction->setCheckable(true);
     historyAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
     tabGroup->addAction(historyAction);
 
     addressBookAction = new QAction(QIcon(":/icons/address-book"), tr("Address"), this);
-    addressBookAction->setFont(veriFontSmall);
     addressBookAction->setToolTip(tr("Saved Addresses"));
     addressBookAction->setCheckable(true);
     addressBookAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(addressBookAction);
 
     fiatAction = new QAction(QIcon(":/icons/fiat"), tr("Get VeriCoin"), this);
-    fiatAction->setFont(veriFontSmall);
     fiatAction->setToolTip(tr("Buy VeriCoin with Fiat or Bitcoin"));
     fiatAction->setCheckable(true);
     fiatAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
     tabGroup->addAction(fiatAction);
 
     newsAction = new QAction(QIcon(":/icons/news"), tr("Forums"), this);
-    newsAction->setFont(veriFontSmall);
     newsAction->setToolTip(tr("Join the VeriCoin Community\nGet the Latest VeriCoin News"));
     newsAction->setCheckable(true);
     newsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_7));
     tabGroup->addAction(newsAction);
 
     chatAction = new QAction(QIcon(":/icons/chat"), tr("Chat"), this);
-    chatAction->setFont(veriFontSmall);
     chatAction->setToolTip(tr("Join the VeriCoin Chat Room"));
     chatAction->setCheckable(true);
     chatAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_8));
     tabGroup->addAction(chatAction);
 
     explorerAction = new QAction(QIcon(":/icons/blockchain"), tr("BlockChain"), this);
-    explorerAction->setFont(veriFontSmall);
     explorerAction->setToolTip(tr("Explore the VeriCoin Blockchain"));
     explorerAction->setCheckable(true);
     explorerAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_9));
     tabGroup->addAction(explorerAction);
 
     superNETAction = new QAction(QIcon(":/icons/supernet_white"), tr("SuperNET"), this);
-    superNETAction->setFont(veriFontSmall);
     superNETAction->setToolTip(tr("Enter the SuperNET"));
     superNETAction->setCheckable(true);
     superNETAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_0));
@@ -680,11 +655,9 @@ void BitcoinGUI::createMenuBar()
     // Get the main window's menu bar on other platforms
     appMenuBar = menuBar();
 #endif
-    appMenuBar->setFont(veriFont);
 
     // Configure the menus
     QMenu *file = appMenuBar->addMenu(tr("&File"));
-    file->setFont(veriFont);
     file->addAction(backupWalletAction);
     file->addAction(exportAction);
     file->addSeparator();
@@ -699,7 +672,6 @@ void BitcoinGUI::createMenuBar()
     file->addAction(quitAction);
 
     QMenu *settings = appMenuBar->addMenu(tr("&Settings"));
-    settings->setFont(veriFont);
     settings->addAction(encryptWalletAction);
     settings->addAction(changePassphraseAction);
     settings->addSeparator();
@@ -708,7 +680,6 @@ void BitcoinGUI::createMenuBar()
     settings->addAction(optionsAction);
 
     QMenu *help = appMenuBar->addMenu(tr("&Help"));
-    help->setFont(veriFont);
     help->addAction(openRPCConsoleAction);
     help->addSeparator();
     help->addAction(forumsAction);
@@ -726,7 +697,6 @@ void BitcoinGUI::createToolBars()
     addToolBar(Qt::LeftToolBarArea, toolbar);
     toolbar->setMovable(false);
     toolbar->setAutoFillBackground(true);
-    toolbar->setFont(veriFontSmall);
     toolbar->setContentsMargins(0,0,0,0);
     toolbar->setOrientation(Qt::Vertical);
     toolbar->setIconSize(QSize(TOOLBAR_ICON_WIDTH,TOOLBAR_ICON_HEIGHT));

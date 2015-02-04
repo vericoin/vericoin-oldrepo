@@ -2,7 +2,6 @@
 #include "ui_aboutdialog.h"
 #include "clientmodel.h"
 #include "util.h"
-#include "guiutil.h"
 #include "guiconstants.h"
 #include "version.h"
 
@@ -14,8 +13,6 @@ AboutDialog::AboutDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setStyleSheet(GUIUtil::veriStyleSheet);
-    this->setFont(veriFont);
-    ui->label_2->setFont(veriFontSmall);
 }
 
 void AboutDialog::setModel(ClientModel *model)

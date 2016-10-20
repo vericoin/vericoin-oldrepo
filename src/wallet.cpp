@@ -1890,11 +1890,16 @@ bool CWallet::CreateCoinTimeStake(const CKeyStore& keystore, unsigned int nBits,
                 nCredit += pcoin.first->vout[pcoin.second].nValue;
                 vwtxPrev.push_back(pcoin.first);
                 txNew.vout.push_back(CTxOut(0, scriptPubKeyOut));
-                int64_t nWeight = GetWeight(block.GetBlockTime(), (int64_t)txNew.nTime);
-                int64_t nCoinWeight = nCredit*nWeight;
-                double nAverageStakeWeight = GetAverageStakeWeight(pindexPrev);
-                if ((nWeight < nStakeSplitAge) || ((nCoinWeight/nAverageStakeWeight) < nStakeSplitWeightFraction))
-                    txNew.vout.push_back(CTxOut(0, scriptPubKeyOut)); //split stake
+                
+                    if (nCredit > 5000) //only split for big wallets for inputs greater than 5000 VRC
+                    {   
+                        int64_t nWeight = GetWeight(block.GetBlockTime(), (int64_t)txNew.nTime);
+                        int64_t nCoinWeight = nCredit*nWeight;
+                        double nAverageStakeWeight = GetAverageStakeWeight(pindexPrev);
+                        if ((nWeight < nStakeSplitAge) || ((nCoinWeight/nAverageStakeWeight) < nStakeSplitWeightFraction))
+                             txNew.vout.push_back(CTxOut(0, scriptPubKeyOut)); //split stake
+                    }
+                
                 if (fDebug && GetBoolArg("-printcoinstake"))
                     printf("CreateCoinTimeStake : added kernel type=%d\n", whichType);
                 fKernelFound = true;

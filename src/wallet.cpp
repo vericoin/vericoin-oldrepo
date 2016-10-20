@@ -1891,7 +1891,7 @@ bool CWallet::CreateCoinTimeStake(const CKeyStore& keystore, unsigned int nBits,
                 vwtxPrev.push_back(pcoin.first);
                 txNew.vout.push_back(CTxOut(0, scriptPubKeyOut));
                 
-                    if (nCredit > 5000) //only split for big wallets for inputs greater than 5000 VRC
+                    if (nCredit > nStakeCombineThreshold) //only split for big wallets for inputs greater than 5000 VRC
                     {   
                         int64_t nWeight = GetWeight(block.GetBlockTime(), (int64_t)txNew.nTime);
                         int64_t nCoinWeight = nCredit*nWeight;

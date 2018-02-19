@@ -3,8 +3,8 @@ For reference
 3 letter code: VRC
 Full name: VeriCoin
 Network magic number: 70352205
-Default peer-to-peer port: 58684
-Default RPC port: 58683
+Default peer-to-peer port: 10901
+Default RPC port: 10902
 Public key prefix: 70
 Pay-to-script hash: 132
 WIF private key prefix: 153

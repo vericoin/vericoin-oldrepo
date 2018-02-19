@@ -2669,9 +2669,9 @@ bool LoadBlockIndex(bool fAllowNew)
         // vMerkleTree: 60424046d3
 
 
-        const char* pszTimestamp = "9 May 2014 US politicians can accept bitcoin donations";
+        const char* pszTimestamp = "Monday, February 19, 2018 A Zamboni driver is proudly representing Canada in the Pyeongchang Winter Games";
         CTransaction txNew;
-        txNew.nTime = 1399690945;
+        txNew.nTime = 1519052017;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
         txNew.vin[0].scriptSig = CScript() << 0 << CBigNum(42) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
@@ -2681,7 +2681,7 @@ bool LoadBlockIndex(bool fAllowNew)
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-        block.nTime    = 1399690945;
+        block.nTime    = 1519052017;
         block.nBits    = bnProofOfWorkLimit.GetCompact();
         block.nNonce   = !fTestNet ? 612416 : 712750;
 

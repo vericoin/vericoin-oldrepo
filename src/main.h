@@ -38,7 +38,7 @@ static const unsigned int MAX_ORPHAN_TRANSACTIONS = 500;
 static const unsigned int MAX_INV_SZ = 50000;
 static const int64_t MIN_TX_FEE = 10000;
 static const int64_t MIN_RELAY_TX_FEE = MIN_TX_FEE;
-static const int64_t MAX_MONEY = std::numeric_limits<int64_t>::max();
+static const int64_t MAX_MONEY = 3300000000 * COIN;
 static const mp_float PI = mp_float("3.1415926535");
 
 inline bool PoSTprotocol(int nHeight) { return nHeight > 608100; }

@@ -1,10 +1,10 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
-// Copyright (c) 2013 The VeriCoin developers
+// Copyright (c) 2013 The RoxyCoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-#ifndef VERICOIN_MINER_H
-#define VERICOIN_MINER_H
+#ifndef ROXYCOIN_MINER_H
+#define ROXYCOIN_MINER_H
 
 #include "main.h"
 #include "wallet.h"
@@ -27,4 +27,4 @@ bool CheckStake(CBlock* pblock, CWallet& wallet);
 /** Base sha256 mining transform */
 void SHA256Transform(void* pstate, void* pinput, const void* pinit);
 
-#endif // VERICOIN_MINER_H
+#endif // ROXYCOIN_MINER_H

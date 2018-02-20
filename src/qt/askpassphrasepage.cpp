@@ -128,7 +128,7 @@ void AskPassphrasePage::accept()
         {
             if(model->setWalletEncrypted(true, newpass1))
             {
-                ui->messageLabel->setText(tr("VeriCoin will now restart to finish the encryption process."));
+                ui->messageLabel->setText(tr("RoxyCoin will now restart to finish the encryption process."));
                 ui->warningLabel->setText(tr("IMPORTANT: Previous backups of your wallet should be replaced with the new one."));
                 ui->passEdit2->setText(QString(" ").repeated(ui->passEdit2->text().size()));
                 ui->passEdit2->setText(QString(""));

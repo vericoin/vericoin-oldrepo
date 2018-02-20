@@ -1,10 +1,10 @@
-VeriCoin-qt: Qt5 GUI for VeriCoin
+RoxyCoin-qt: Qt5 GUI for RoxyCoin
 ===============================
 
 Build instructions
 ===================
 
-Building your own VeriCoin GUI requires Qt version 5.2 or newer.
+Building your own RoxyCoin GUI requires Qt version 5.2 or newer.
 
 Debian
 -------
@@ -32,16 +32,16 @@ then execute the following:
     make
 
     cd ../..
-    qmake vericoin-qt.pro
+    qmake roxycoin-qt.pro
     make
 
-Alternatively, run Qt Creator and open the `vericoin-qt.pro` file.
+Alternatively, run Qt Creator and open the `roxycoin-qt.pro` file.
 
    You may need to install libGL in some Linux environments:
 
    sudo apt-get install libglu1-mesa-dev -y
 
-An executable named `vericoin-qt` will be built.
+An executable named `roxycoin-qt` will be built.
 
 
 Windows
@@ -83,7 +83,7 @@ Build configuration options
 UPNnP port forwarding
 ---------------------
 
-To use UPnP for port forwarding behind a NAT router (recommended, as more connections overall allow for a faster and more stable vericoin experience), pass the following argument to qmake:
+To use UPnP for port forwarding behind a NAT router (recommended, as more connections overall allow for a faster and more stable roxycoin experience), pass the following argument to qmake:
 
 ::
 
@@ -131,9 +131,9 @@ flag to qmake to control this:
 Berkely DB version warning
 ==========================
 
-A warning for people using the *static binary* version of VeriCoin on a Linux/UNIX-ish system (tl;dr: **Berkely DB databases are not forward compatible**).
+A warning for people using the *static binary* version of RoxyCoin on a Linux/UNIX-ish system (tl;dr: **Berkely DB databases are not forward compatible**).
 
-The static binary version of VeriCoin is linked against libdb4.8 (see also `this Debian issue`_).
+The static binary version of RoxyCoin is linked against libdb4.8 (see also `this Debian issue`_).
 
 Now the nasty thing is that databases from 5.X are not compatible with 4.X.
 
@@ -148,7 +148,7 @@ Ubuntu 11.10 warning
 ====================
 
 Ubuntu 11.10 has a package called 'qt-at-spi' installed by default.  At the time of writing, having that package
-installed causes vericoin-qt to crash intermittently.  The issue has been reported as `launchpad bug 857790`_, but
+installed causes roxycoin-qt to crash intermittently.  The issue has been reported as `launchpad bug 857790`_, but
 isn't yet fixed.
 
 Until the bug is fixed, you can remove the qt-at-spi package to work around the problem, though this will presumably

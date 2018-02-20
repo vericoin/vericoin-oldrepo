@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleExecutable</key>
-	<string>VeriCoin-Qt</string>
+	<string>RoxyCoin-Qt</string>
 	<key>CFBundleGetInfoString</key>
 	<string>$VERSION, Copyright © 2009-$YEAR The Bitcoin developers</string>
 	<key>CFBundleIconFile</key>
-	<string>vericoin.icns</string>
+	<string>roxycoin.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>org.vericoin.VeriCoin-Qt</string>
+	<string>org.roxycoin.RoxyCoin-Qt</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -22,10 +22,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>org.vericoin.VeriCoinPayment</string>
+			<string>org.roxycoin.RoxyCoinPayment</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>vericoin</string>
+				<string>roxycoin</string>
 			</array>
 		</dict>
 	</array>

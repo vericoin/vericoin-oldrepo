@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>VeriCoin - Debug window</string>
+   <string>RoxyCoin - Debug window</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
@@ -30,7 +30,7 @@
        <item row="0" column="0">
         <widget class="QLabel" name="label_9">
          <property name="text">
-          <string>VeriCoin Core</string>
+          <string>RoxyCoin Core</string>
          </property>
         </widget>
        </item>
@@ -304,7 +304,7 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>Open the VeriCoin debug log file from the current data directory. This can take a few seconds for large log files.</string>
+          <string>Open the RoxyCoin debug log file from the current data directory. This can take a few seconds for large log files.</string>
          </property>
          <property name="text">
           <string>&amp;Open</string>
@@ -330,7 +330,7 @@
           </size>
          </property>
          <property name="toolTip">
-          <string>Show the VeriCoin-Qt help message to get a list with possible VeriCoin command-line options.</string>
+          <string>Show the RoxyCoin-Qt help message to get a list with possible RoxyCoin command-line options.</string>
          </property>
          <property name="text">
           <string>&amp;Show</string>

@@ -14,7 +14,7 @@ WhatsNewDialog::WhatsNewDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::WhatsNewDialog)
 {
-    std::string title = "What's New in VeriCoin";
+    std::string title = "What's New in RoxyCoin";
     std::string description = GetArg("-vDescription", "Error downloading version data. Please try again later.").c_str();
     std::string version = "NEW IN " + GetArg("-vVersion", "0.0");
     ui->setupUi(this);

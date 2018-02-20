@@ -69,7 +69,7 @@ void Shutdown(void* parg)
     static bool fTaken;
 
     // Make this thread recognisable as the shutdown thread
-    RenameThread("vericoin-shutoff");
+    RenameThread("roxycoin-shutoff");
 
     bool fFirstThread = false;
     {
@@ -102,7 +102,7 @@ void Shutdown(void* parg)
                     boost::filesystem::rename(GetDataDir() / "bootstrap" / "blk0001.dat", GetDataDir() / "blk0001.dat");
                     boost::filesystem::rename(GetDataDir() / "bootstrap" / "txleveldb", GetDataDir() / "txleveldb");
                     if (fBootstrapConfig){
-                        boost::filesystem::rename(GetDataDir() / "bootstrap" / "vericoin.conf", GetDataDir() / "vericoin.conf");}
+                        boost::filesystem::rename(GetDataDir() / "bootstrap" / "roxycoin.conf", GetDataDir() / "roxycoin.conf");}
                     boost::filesystem::remove_all(GetDataDir() / "bootstrap");
 
                     RestartWallet(NULL, true);
@@ -130,7 +130,7 @@ void Shutdown(void* parg)
                 boost::filesystem::rename(GetDataDir() / "bootstrap" / "blk0001.dat", GetDataDir() / "blk0001.dat");
                 boost::filesystem::rename(GetDataDir() / "bootstrap" / "txleveldb", GetDataDir() / "txleveldb");
                 if (fBootstrapConfig)
-                    boost::filesystem::rename(GetDataDir() / "bootstrap" / "vericoin.conf", GetConfigFile());
+                    boost::filesystem::rename(GetDataDir() / "bootstrap" / "roxycoin.conf", GetConfigFile());
                 boost::filesystem::remove_all(GetDataDir() / "bootstrap");
 
                 boost::filesystem::path pathBootstrapTurbo(GetDataDir() / "bootstrap.zip");
@@ -154,7 +154,7 @@ void Shutdown(void* parg)
         delete pwalletMain;
         NewThread(ExitTimeout, NULL);
         MilliSleep(50);
-        printf("VeriCoin exited\n\n");
+        printf("RoxyCoin exited\n\n");
         fExit = true;
 
 #ifndef QT_GUI
@@ -198,7 +198,7 @@ void RestartWallet(const char *parm, bool fOldParms)
         fOldParms = false;
         newArgv.clear();
         // Installer created by Inno Setup
-        command = QString(GetDataDir().string().c_str()) + QString("/") + QString(GetArg("-vFileName","vericoin-setup.exe").c_str());
+        command = QString(GetDataDir().string().c_str()) + QString("/") + QString(GetArg("-vFileName","roxycoin-setup.exe").c_str());
 #else
 #ifdef MAC_OSX
         // If Mac, replace argv[0] with Finder and pass the location of the pkg file.
@@ -207,19 +207,19 @@ void RestartWallet(const char *parm, bool fOldParms)
         newArgv.clear();
         // Installer created by pkgbuild or Package Maker
         command = QString("/usr/bin/open");
-        newArgv.append(QString(GetDataDir().c_str()) + QString("/") + QString(GetArg("-vFileName","vericoin-setup.pkg").c_str()));
+        newArgv.append(QString(GetDataDir().c_str()) + QString("/") + QString(GetArg("-vFileName","roxycoin-setup.pkg").c_str()));
 #else
-        // If Linux, just restart (already extracted vericoin-qt from the zip in downloader.cpp).
+        // If Linux, just restart (already extracted roxycoin-qt from the zip in downloader.cpp).
         parm = NULL;
         fOldParms = false;
         newArgv.clear();
         // Installer created by makeself.sh
-        command = QString(GetDataDir().c_str()) + QString("/") + QString(GetArg("-vFileName","vericoin-setup.run").c_str());
+        command = QString(GetDataDir().c_str()) + QString("/") + QString(GetArg("-vFileName","roxycoin-setup.run").c_str());
         newArgv.append(QString("--target"));
         newArgv.append(QString(GetProgramDir().c_str()));
         newArgv.append(QString("--nox11"));
         // Make executable
-        boost::filesystem::path installer(GetDataDir() / GetArg("-vFileName","vericoin-setup.run"));
+        boost::filesystem::path installer(GetDataDir() / GetArg("-vFileName","roxycoin-setup.run"));
         boost::filesystem::permissions(installer, status(installer).permissions() | boost::filesystem::owner_exe | boost::filesystem::group_exe);
 #endif
 #endif
@@ -297,12 +297,12 @@ bool AppInit(int argc, char* argv[])
         if (mapArgs.count("-?") || mapArgs.count("--help"))
         {
             // First part of help message is specific to bitcoind / RPC client
-            std::string strUsage = _("VeriCoin Version") + " " + FormatFullVersion() + "\n\n" +
+            std::string strUsage = _("RoxyCoin Version") + " " + FormatFullVersion() + "\n\n" +
                 _("Usage:") + "\n" +
-                  "  vericoind [options]                     " + "\n" +
-                  "  vericoind [options] <command> [params]  " + _("Send command to -server or vericoind") + "\n" +
-                  "  vericoind [options] help                " + _("List commands") + "\n" +
-                  "  vericoind [options] help <command>      " + _("Get help for a command") + "\n";
+                  "  roxycoind [options]                     " + "\n" +
+                  "  roxycoind [options] <command> [params]  " + _("Send command to -server or roxycoind") + "\n" +
+                  "  roxycoind [options] help                " + _("List commands") + "\n" +
+                  "  roxycoind [options] help <command>      " + _("Get help for a command") + "\n";
 
             strUsage += "\n" + HelpMessage();
 
@@ -312,7 +312,7 @@ bool AppInit(int argc, char* argv[])
 
         // Command-line RPC
         for (int i = 1; i < argc; i++)
-            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "vericoin:"))
+            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "roxycoin:"))
                 fCommandLine = true;
 
         if (fCommandLine)
@@ -352,13 +352,13 @@ int main(int argc, char* argv[])
 
 bool static InitError(const std::string &str)
 {
-    uiInterface.ThreadSafeMessageBox(str, _("VeriCoin"), CClientUIInterface::OK | CClientUIInterface::MODAL);
+    uiInterface.ThreadSafeMessageBox(str, _("RoxyCoin"), CClientUIInterface::OK | CClientUIInterface::MODAL);
     return false;
 }
 
 bool static InitWarning(const std::string &str)
 {
-    uiInterface.ThreadSafeMessageBox(str, _("VeriCoin"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
+    uiInterface.ThreadSafeMessageBox(str, _("RoxyCoin"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
     return true;
 }
 
@@ -381,8 +381,8 @@ std::string HelpMessage()
 {
     string strUsage = _("Options:") + "\n" +
         "  -?                     " + _("This help message") + "\n" +
-        "  -conf=<file>           " + _("Specify configuration file path (default: <cwd>/vericoin.conf)") + "\n" +
-        "  -pid=<file>            " + _("Specify pid file (default: vericoind.pid)") + "\n" +
+        "  -conf=<file>           " + _("Specify configuration file path (default: <cwd>/roxycoin.conf)") + "\n" +
+        "  -pid=<file>            " + _("Specify pid file (default: roxycoind.pid)") + "\n" +
         "  -datadir=<dir>         " + _("Specify data directory") + "\n" +
         "  -wallet=<dir>          " + _("Specify wallet file (within data directory)") + "\n" +
         "  -dbcache=<n>           " + _("Set database cache size in megabytes (default: 25)") + "\n" +
@@ -392,7 +392,7 @@ std::string HelpMessage()
         "  -socks=<n>             " + _("Select the version of socks proxy to use (4-5, default: 5)") + "\n" +
         "  -tor=<ip:port>         " + _("Use proxy to reach tor hidden services (default: same as -proxy)") + "\n"
         "  -dns                   " + _("Allow DNS lookups for -addnode, -seednode and -connect") + "\n" +
-        "  -port=<port>           " + _("Listen for connections on <port> (default: 58684 or testnet: 48684)") + "\n" +
+        "  -port=<port>           " + _("Listen for connections on <port> (default: 10901 or testnet: 10903)") + "\n" +
         "  -maxconnections=<n>    " + _("Maintain at most <n> connections to peers (default: 12)") + "\n" +
         "  -addnode=<ip>          " + _("Add a node to connect to and attempt to keep the connection open") + "\n" +
         "  -connect=<ip>          " + _("Connect only to the specified node(s)") + "\n" +
@@ -437,7 +437,7 @@ std::string HelpMessage()
 #endif
         "  -rpcuser=<user>        " + _("Username for JSON-RPC connections") + "\n" +
         "  -rpcpassword=<pw>      " + _("Password for JSON-RPC connections") + "\n" +
-        "  -rpcport=<port>        " + _("Listen for JSON-RPC connections on <port> (default: 58683 or testnet: 48683)") + "\n" +
+        "  -rpcport=<port>        " + _("Listen for JSON-RPC connections on <port> (default: 10902 or testnet: 10904)") + "\n" +
         "  -rpcallowip=<ip>       " + _("Allow JSON-RPC connections from specified IP address") + "\n" +
         "  -rpcconnect=<ip>       " + _("Send commands to node running on <ip> (default: 127.0.0.1)") + "\n" +
         "  -blocknotify=<cmd>     " + _("Execute command when the best block changes (%s in cmd is replaced by block hash)") + "\n" +
@@ -635,7 +635,7 @@ bool AppInit2()
     static boost::interprocess::file_lock lock(pathLockFile.string().c_str());
 
     if (!lock.try_lock())
-        return InitError(strprintf(_("Cannot obtain a lock on data directory %s.  VeriCoin is probably already running."), strDataDir.c_str()));
+        return InitError(strprintf(_("Cannot obtain a lock on data directory %s.  RoxyCoin is probably already running."), strDataDir.c_str()));
 
 #if !defined(WIN32) && !defined(QT_GUI)
     if (fDaemon)
@@ -662,7 +662,7 @@ bool AppInit2()
     if (GetBoolArg("-shrinkdebugfile", !fDebug))
         ShrinkDebugFile();
     printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-    printf("VeriCoin Version %s (%s)\n", FormatFullVersion().c_str(), CLIENT_DATE.c_str());
+    printf("RoxyCoin Version %s (%s)\n", FormatFullVersion().c_str(), CLIENT_DATE.c_str());
     printf("Using OpenSSL version %s\n", SSLeay_version(SSLEAY_VERSION));
     if (!fLogTimestamps)
         printf("Startup time: %s\n", DateTimeStrFormat("%x %H:%M:%S", GetTime()).c_str());
@@ -671,7 +671,7 @@ bool AppInit2()
     std::ostringstream strErrors;
 
     if (fDaemon)
-        fprintf(stdout, "VeriCoin server starting\n");
+        fprintf(stdout, "RoxyCoin server starting\n");
 
     int64_t nStart;
 
@@ -703,7 +703,7 @@ bool AppInit2()
                                      " Original wallet.dat saved as wallet.{timestamp}.bak in %s; if"
                                      " your balance or transactions are incorrect you should"
                                      " restore from a backup."), strDataDir.c_str());
-            uiInterface.ThreadSafeMessageBox(msg, _("VeriCoin"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
+            uiInterface.ThreadSafeMessageBox(msg, _("RoxyCoin"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
         }
         if (r == CDBEnv::RECOVER_FAIL)
             return InitError(_("wallet.dat corrupt, salvage failed"));
@@ -904,13 +904,13 @@ bool AppInit2()
         {
             string msg(_("Warning: error reading wallet.dat! All keys read correctly, but transaction data"
                          " or address book entries might be missing or incorrect."));
-            uiInterface.ThreadSafeMessageBox(msg, _("VeriCoin"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
+            uiInterface.ThreadSafeMessageBox(msg, _("RoxyCoin"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
         }
         else if (nLoadWalletRet == DB_TOO_NEW)
-            strErrors << _("Error loading wallet.dat: Wallet requires newer version of VeriCoin") << "\n";
+            strErrors << _("Error loading wallet.dat: Wallet requires newer version of RoxyCoin") << "\n";
         else if (nLoadWalletRet == DB_NEED_REWRITE)
         {
-            strErrors << _("Wallet needed to be rewritten: restart VeriCoin to complete") << "\n";
+            strErrors << _("Wallet needed to be rewritten: restart RoxyCoin to complete") << "\n";
             printf("%s", strErrors.str().c_str());
             return InitError(strErrors.str());
         }

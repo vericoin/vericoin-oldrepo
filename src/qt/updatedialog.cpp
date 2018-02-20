@@ -14,7 +14,7 @@ UpdateDialog::UpdateDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::UpdateDialog)
 {
-    std::string title = GetArg("-vTitle", "VeriCoin Update Available");
+    std::string title = GetArg("-vTitle", "RoxyCoin Update Available");
     std::string description = GetArg("-vDescription", "Lot's of new features.").c_str();
     std::string version = "NEW IN " + GetArg("-vVersion", "1.0.0.0");
     std::string postreq = std::string("\nPost-Install Notes: ").append((GetBoolArg("-vBootstrap") ? "Auto Bootstrap will run after the installation." : "Bootstrapping is not required."));

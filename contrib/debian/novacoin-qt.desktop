@@ -1,12 +1,12 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=VeriCoin
-Comment=VeriCoin P2P Cryptocurrency
-Comment[fr]=VeriCoin, monnaie virtuelle cryptographique pair à pair
-Comment[tr]=VeriCoin, eşten eşe kriptografik sanal para birimi
-Exec=/usr/bin/vericoin-qt
+Name=RoxyCoin
+Comment=RoxyCoin P2P Cryptocurrency
+Comment[fr]=RoxyCoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=RoxyCoin, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/roxycoin-qt
 Terminal=false
 Type=Application
 Icon=/usr/share/pixmaps/bitcoin80.xpm
-MimeType=x-scheme-handler/vericoin;
+MimeType=x-scheme-handler/roxycoin;
 Categories=Office;

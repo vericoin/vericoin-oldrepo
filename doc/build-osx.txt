@@ -7,15 +7,15 @@ software written by Eric Young (eay@cryptsoft.com) and UPnP software written by
 Thomas Bernard.
 
 
-Mac OS X vericoind and qt build instructions
+Mac OS X roxycoind and qt build instructions
 Laszlo Hanyecz <solar@heliacal.net>
 Douglas Huff <dhuff@jrbobdobbs.org>
 
 
-See readme-qt.rst for instructions on building VeriCoin QT, the
+See readme-qt.rst for instructions on building RoxyCoin QT, the
 graphical user interface.
 
-This source is actively supported for 10.9 and above and tested up to 10.12 since apple switched to libc++ from libstdc++.  It can be built for 10.7-10.9 by changing -mmacosx-version-min=10.9 to -mmacosx-version-min=10.7 in lines 97-99 of vericoin-qt.pro.
+This source is actively supported for 10.9 and above and tested up to 10.12 since apple switched to libc++ from libstdc++.  It can be built for 10.7-10.9 by changing -mmacosx-version-min=10.9 to -mmacosx-version-min=10.7 in lines 97-99 of roxycoin-qt.pro.
 
 All of the commands should be executed in Terminal.app.. it's in
 /Applications/Utilities
@@ -39,18 +39,18 @@ sudo port install boost db48 openssl miniupnpc minizip curl
 
 6.  Clone the github tree to get the source code:
 
-git clone https://github.com/vericoin/vericoin.git
+git clone https://github.com/roxycoin/roxycoin.git
 
-7.  Now you should be able to build headless vericoind, if building vericoin-qt skip to 8:
+7.  Now you should be able to build headless roxycoind, if building roxycoin-qt skip to 8:
 
-cd vericoin/src
+cd roxycoin/src
 make -f makefile.osx
 Run:
-  ./vericoind --help  # for a list of command-line options.
+  ./roxycoind --help  # for a list of command-line options.
 Run
-  ./vericoind -daemon # to start the vericoin daemon.
+  ./roxycoind -daemon # to start the roxycoin daemon.
 Run
-  ./vericoind help # When the daemon is running, to get a list of RPC commands
+  ./roxycoind help # When the daemon is running, to get a list of RPC commands
 
 8. For qt builds:
 
@@ -74,7 +74,7 @@ QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
 to:
 QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
 
-11. Run qtcreator in qt install folder and load vericoin via the vericoin-qt.pro file and click the build button
+11. Run qtcreator in qt install folder and load roxycoin via the roxycoin-qt.pro file and click the build button
 
 
 

@@ -7,7 +7,7 @@ cryptographic software written by Eric Young (eay@cryptsoft.com) and UPnP
 software written by Thomas Bernard.
 
 
-See readme-qt.rst for instructions on building VeriCoin QT, the
+See readme-qt.rst for instructions on building RoxyCoin QT, the
 graphical user interface.
 
 WINDOWS BUILD NOTES
@@ -51,7 +51,7 @@ cryptographic software written by Eric Young (eay@cryptsoft.com) and UPnP
 software written by Thomas Bernard.
 
 
-See readme-qt.rst for instructions on building VeriCoin QT, the
+See readme-qt.rst for instructions on building RoxyCoin QT, the
 graphical user interface.
 
 WINDOWS BUILD NOTES
@@ -187,11 +187,11 @@ configure --enable-static --disable-shared --without-tools
 make
 
 
-# Building VeriCoin:
+# Building RoxyCoin:
 
 1. open mingw shell
 C:\MinGW\msys\1.0\msys.bat
-cd /c/Users/user/vericoin (or wherever your source lives)
+cd /c/Users/user/roxycoin (or wherever your source lives)
 cd src/leveldb
 TARGET_OS=NATIVE_WINDOWS make clean
 TARGET_OS=NATIVE_WINDOWS make libleveldb.a libmemenv.a
@@ -203,6 +203,6 @@ mingw32-make -j6 -f Makefile.Release
 exit
 
 2. Then in a command prompt
-qmake "USE_QRCODE=1" "USE_UPNP=1" "USE_IPV6=1" vericoin-qt.pro
+qmake "USE_QRCODE=1" "USE_UPNP=1" "USE_IPV6=1" roxycoin-qt.pro
 mingw32-make -j6 -f Makefile.Release
 

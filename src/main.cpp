@@ -71,7 +71,7 @@ map<uint256, set<uint256> > mapOrphanTransactionsByPrev;
 // Constant stuff for coinbase transactions we create:
 CScript COINBASE_FLAGS;
 
-const string strMessageMagic = "VeriCoin Signed Message:\n";
+const string strMessageMagic = "RoxyCoin Signed Message:\n";
 
 // Settings
 int64_t nTransactionFee = MIN_TX_FEE;
@@ -949,7 +949,7 @@ uint256 WantedByOrphan(const CBlock* pblockOrphan)
 }
 
 // miner's coin base reward
-int64_t GetProofOfWorkReward(int64_t nFees)
+int64_t GetProofOfWorkReward(int64_t nFees, int nHeight)
 {
     int64_t nSubsidy;
     if (fTestNet)
@@ -958,7 +958,18 @@ int64_t GetProofOfWorkReward(int64_t nFees)
     }
     else
     {
-        nSubsidy = 2500 * COIN;
+        if (nHeight == 100)
+        {
+            nSubsidy = 1000000000 * COIN;
+        }
+        else if (nHeight <= 1102)
+        {
+            nSubsidy = 10000 * COIN;
+        }
+        else
+        {
+            nSubsidy = 1 * COIN;
+        }
     }
 
     if (fDebug && GetBoolArg("-printcreation"))
@@ -1691,7 +1702,7 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
 
     if (IsProofOfWork())
     {
-        int64_t nReward = GetProofOfWorkReward(nFees);
+        int64_t nReward = GetProofOfWorkReward(nFees, pindexBest->nHeight);
         // Check coinbase reward
         if (vtx[0].GetValueOut() > nReward)
             return DoS(50, error("ConnectBlock() : coinbase reward exceeded (actual=%" PRId64 " vs calculated=%" PRId64 ")",
@@ -1992,7 +2003,7 @@ bool CBlock::SetBestChain(CTxDB& txdb, CBlockIndex* pindexNew)
     return true;
 }
 
-// VeriCoin: total stake time spent in transaction that is accepted by the network, in the unit of coin-days.
+// RoxyCoin: total stake time spent in transaction that is accepted by the network, in the unit of coin-days.
 // Only those coins meeting minimum age requirement counts. As those
 // transactions not in main chain are not currently indexed so we
 // might not find out about their coin age. Older transactions are
@@ -2168,7 +2179,7 @@ bool CBlock::CheckBlock(bool fCheckPOW, bool fCheckMerkleRoot, bool fCheckSig) c
         if (!CheckCoinStakeTimestamp(GetBlockTime(), (int64_t)vtx[1].nTime))
             return DoS(50, error("CheckBlock() : coinstake timestamp violation nTimeBlock=%" PRId64 " nTimeTx=%u", GetBlockTime(), vtx[1].nTime));
 
-        // VeriCoin: check proof-of-stake block signature
+        // RoxyCoin: check proof-of-stake block signature
         if (fCheckSig && !CheckBlockSignature(true))
             return DoS(100, error("CheckBlock() : bad proof-of-stake block signature"));
     }
@@ -2429,7 +2440,7 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
     return true;
 }
 
-// vericoin: attempt to generate suitable proof-of-stake
+// roxycoin: attempt to generate suitable proof-of-stake
 bool CBlock::SignBlock(CWallet& wallet, int64_t nFees, int64_t nHeight)
 
 {
@@ -2544,7 +2555,7 @@ bool CheckDiskSpace(uint64_t nAdditionalBytes)
         string strMessage = _("Warning: Disk space is low!");
         strMiscWarning = strMessage;
         printf("*** %s\n", strMessage.c_str());
-        uiInterface.ThreadSafeMessageBox(strMessage, "VeriCoin", CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
+        uiInterface.ThreadSafeMessageBox(strMessage, "RoxyCoin", CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
         StartShutdown();
         return false;
     }
@@ -2658,9 +2669,9 @@ bool LoadBlockIndex(bool fAllowNew)
         // vMerkleTree: 60424046d3
 
 
-        const char* pszTimestamp = "9 May 2014 US politicians can accept bitcoin donations";
+        const char* pszTimestamp = "Monday, February 19, 2018 A Zamboni driver is proudly representing Canada in the Pyeongchang Winter Games";
         CTransaction txNew;
-        txNew.nTime = 1399690945;
+        txNew.nTime = 1519052017;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
         txNew.vin[0].scriptSig = CScript() << 0 << CBigNum(42) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
@@ -2670,12 +2681,25 @@ bool LoadBlockIndex(bool fAllowNew)
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-        block.nTime    = 1399690945;
+        block.nTime    = 1519052017;
         block.nBits    = bnProofOfWorkLimit.GetCompact();
         block.nNonce   = !fTestNet ? 612416 : 712750;
 
         //// debug print
-        assert(block.hashMerkleRoot == uint256("0x60424046d38de827de0ed1a20a351aa7f3557e3e1d3df6bfb34a94bc6161ec68"));
+        // assert(block.hashMerkleRoot == uint256("0x60424046d38de827de0ed1a20a351aa7f3557e3e1d3df6bfb34a94bc6161ec68"));
+        CBigNum bnTarget;
+        bnTarget.SetCompact(block.nBits);
+        while (block.GetHash() > bnTarget.getuint256())
+        {
+            if (block.nNonce % 1048576 == 0)
+                printf("n=%dM hash=%s\n", block.nNonce / 1048576,
+                       block.GetHash().ToString().c_str());
+            block.nNonce++;
+        }
+
+        printf("Peershares Genesis Block Found:\n");
+        printf("genesis hash=%s\n", block.GetHash().ToString().c_str());
+        printf("merkle root=%s\n", block.hashMerkleRoot.ToString().c_str());
         block.print();
 
         assert(block.GetHash() == (!fTestNet ? hashGenesisBlock : hashGenesisBlockTestNet));

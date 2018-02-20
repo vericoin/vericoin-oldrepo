@@ -285,11 +285,11 @@ void Downloader::startRequest(QUrl url)
     QString statusText(tr("Please wait for the download to complete..."));
     if (processBlockchain)
     {
-        statusText.append(tr("\n\nThe VeriCoin wallet will restart after extracting the bootstrap%1").arg((fEncrypt ? " and encrypting the wallet." : ".")));
+        statusText.append(tr("\n\nThe RoxyCoin wallet will restart after extracting the bootstrap%1").arg((fEncrypt ? " and encrypting the wallet." : ".")));
     }
     else if (processUpdate)
     {
-        statusText.append(tr("\n\nThe VeriCoin wallet will restart after downloading the update."));
+        statusText.append(tr("\n\nThe RoxyCoin wallet will restart after downloading the update."));
     }
     ui->statusLabel->setText(statusText);
 }

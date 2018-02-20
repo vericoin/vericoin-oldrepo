@@ -118,7 +118,7 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     GUIUtil::setFontPixelSizes();
     qApp->setFont(qFont);
 
-    setWindowTitle(tr("VeriCoin Wallet"));
+    setWindowTitle(tr("RoxyCoin Wallet"));
     setWindowIcon(QIcon(":icons/bitcoin"));
     qApp->setWindowIcon(QIcon(":icons/bitcoin"));
 
@@ -364,7 +364,7 @@ void BitcoinGUI::lockWalletFeatures(bool lock)
     {
         gotoOverviewPage();
 
-        QSettings settings("VeriCoin", "VeriCoin-Qt");
+        QSettings settings("RoxyCoin", "RoxyCoin-Qt");
         restoreGeometry(settings.value("geometry").toByteArray());
         restoreState(settings.value("windowState").toByteArray());
 
@@ -393,7 +393,7 @@ void BitcoinGUI::createActions()
     tabGroup->addAction(overviewAction);
 
     sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("Send"), this);
-    sendCoinsAction->setToolTip(tr("Send VeriCoin"));
+    sendCoinsAction->setToolTip(tr("Send RoxyCoin"));
     sendCoinsAction->setCheckable(true);
     sendCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     tabGroup->addAction(sendCoinsAction);
@@ -434,8 +434,8 @@ void BitcoinGUI::createActions()
     logoutAction = new QAction(QIcon(":/icons/logout"), tr("&Logout"), this);
     logoutAction->setToolTip(tr("Logout and Stop Staking"));
     logoutAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
-    aboutAction = new QAction(QIcon(":/icons/about"), tr("&About VeriCoin"), this);
-    aboutAction->setToolTip(tr("Show information about VeriCoin"));
+    aboutAction = new QAction(QIcon(":/icons/about"), tr("&About RoxyCoin"), this);
+    aboutAction->setToolTip(tr("Show information about RoxyCoin"));
     aboutAction->setMenuRole(QAction::AboutRole);
     aboutPostAction = new QAction(QIcon(":/icons/PoSTicon"), tr("&About PoST"), this);
     aboutPostAction->setToolTip(tr("Show information about PoST protocol"));
@@ -444,7 +444,7 @@ void BitcoinGUI::createActions()
     aboutQtAction->setToolTip(tr("Show information about Qt"));
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
     optionsAction = new QAction(QIcon(":/icons/options"), tr("&Options"), this);
-    optionsAction->setToolTip(tr("Modify configuration options for VeriCoin"));
+    optionsAction->setToolTip(tr("Modify configuration options for RoxyCoin"));
     optionsAction->setMenuRole(QAction::PreferencesRole);
     toggleHideAction = new QAction(QIcon(":/icons/bitcoin"), tr("&Show / Hide"), this);
     backupWalletAction = new QAction(QIcon(":/icons/filesave"), tr("&Backup Wallet"), this);
@@ -470,10 +470,10 @@ void BitcoinGUI::createActions()
     verifyMessageAction = new QAction(QIcon(":/icons/verify"), tr("&Verify Message"), this);
     checkForUpdateAction = new QAction(QIcon(":/icons/update"), tr("Check For &Update"), this);
     checkForUpdateAction->setToolTip(tr("Check for a new version of the wallet and update."));
-    forumAction = new QAction(QIcon(":/icons/bitcoin"), tr("VeriCoin &Forums"), this);
-    forumAction->setToolTip(tr("Go to the VeriCoin forums."));
-    webAction = new QAction(QIcon(":/icons/site"), tr("www.vericoin.info"), this);
-    webAction->setToolTip(tr("Go to VeriCoin website."));
+    forumAction = new QAction(QIcon(":/icons/bitcoin"), tr("RoxyCoin &Forums"), this);
+    forumAction->setToolTip(tr("Go to the RoxyCoin forums."));
+    webAction = new QAction(QIcon(":/icons/site"), tr("www.roxycoin.info"), this);
+    webAction->setToolTip(tr("Go to RoxyCoin website."));
 
     exportAction = new QAction(QIcon(":/icons/export"), tr("&Export Data"), this);
     exportAction->setToolTip(tr("Export the data in the current tab to a file"));
@@ -595,7 +595,7 @@ void BitcoinGUI::setClientModel(ClientModel *clientModel)
 #endif
             if(trayIcon)
             {
-                trayIcon->setToolTip(tr("VeriCoin Wallet") + QString(" ") + tr("[testnet]"));
+                trayIcon->setToolTip(tr("RoxyCoin Wallet") + QString(" ") + tr("[testnet]"));
                 trayIcon->setIcon(QIcon(":/icons/toolbar_testnet"));
                 toggleHideAction->setIcon(QIcon(":/icons/toolbar_testnet"));
             }
@@ -666,7 +666,7 @@ void BitcoinGUI::createTrayIcon()
     trayIcon = new QSystemTrayIcon(this);
     trayIconMenu = new QMenu(this);
     trayIcon->setContextMenu(trayIconMenu);
-    trayIcon->setToolTip(tr("VeriCoin Wallet"));
+    trayIcon->setToolTip(tr("RoxyCoin Wallet"));
     trayIcon->setIcon(QIcon(":/icons/toolbar"));
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
@@ -794,7 +794,7 @@ void BitcoinGUI::setNumConnections(int count)
     QString connectionlabel = connections + label;
     connectionsLabel->setText(QString(connectionlabel));
     labelConnectionsIcon->setPixmap(QIcon(icon).pixmap(72,STATUSBAR_ICONSIZE));
-    labelConnectionsIcon->setToolTip(tr("%1 active connection%2 to the VeriCoin network").arg(count).arg(count == 1 ? "" : "s"));
+    labelConnectionsIcon->setToolTip(tr("%1 active connection%2 to the RoxyCoin network").arg(count).arg(count == 1 ? "" : "s"));
 }
 
 void BitcoinGUI::setNumBlocks(int count, int nTotalBlocks)
@@ -938,7 +938,7 @@ void BitcoinGUI::changeEvent(QEvent *e)
 
 void BitcoinGUI::exitApp()
 {
-    QSettings settings("VeriCoin", "VeriCoin-Qt");
+    QSettings settings("RoxyCoin", "RoxyCoin-Qt");
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
 
@@ -1166,7 +1166,7 @@ void BitcoinGUI::dropEvent(QDropEvent *event)
         if (nValidUrisFound)
             gotoSendCoinsPage();
         else
-            notificator->notify(Notificator::Warning, tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid VeriCoin address or malformed URI parameters."));
+            notificator->notify(Notificator::Warning, tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid RoxyCoin address or malformed URI parameters."));
     }
 
     event->acceptProposedAction();
@@ -1181,7 +1181,7 @@ void BitcoinGUI::handleURI(QString strURI)
         gotoSendCoinsPage();
     }
     else
-        notificator->notify(Notificator::Warning, tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid VeriCoin address or malformed URI parameters."));
+        notificator->notify(Notificator::Warning, tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid RoxyCoin address or malformed URI parameters."));
 }
 
 void BitcoinGUI::setEncryptionStatus(int status)
@@ -1290,7 +1290,7 @@ void BitcoinGUI::exportPrivKey()
         if (!address.SetString(strAddress))
         {
             QMessageBox::warning(this, tr("Export Private Key"),
-                tr("This is an invalid VeriCoin address"),
+                tr("This is an invalid RoxyCoin address"),
                 QMessageBox::Ok, QMessageBox::Ok);
             return;
         }
@@ -1315,7 +1315,7 @@ void BitcoinGUI::exportPrivKey()
         std::string privkey = CBitcoinSecret(vchSecret, fCompressed).ToString();
         QString qprivkey = QString::fromStdString(privkey);
         QMessageBox::warning(this, tr("Export Private Key"),
-            tr("This is the private key:\n%1 \n\nAssociated with this VeriCoin address: \n%2\n\nCopy to secure location, this allows access to coins.").arg(qprivkey).arg(qstrAddress),
+            tr("This is the private key:\n%1 \n\nAssociated with this RoxyCoin address: \n%2\n\nCopy to secure location, this allows access to coins.").arg(qprivkey).arg(qstrAddress),
             QMessageBox::Ok, QMessageBox::Ok);
         vchSecret.clear(), privkey.clear(), qprivkey.clear(); //ensure memory is cleared once ok is pressed
     }
@@ -1700,7 +1700,7 @@ void BitcoinGUI::checkForUpdate()
 
         checkForUpdateActionEnabled(false); // Sets back to true when dialog closes.
 
-        std::string basename = GetArg("-vFileName","vericoin-qt");
+        std::string basename = GetArg("-vFileName","roxycoin-qt");
         fileName = fileName / basename.c_str();
         url.setUrl(QString(walletDownloadsUrl).append(basename.c_str()));
 

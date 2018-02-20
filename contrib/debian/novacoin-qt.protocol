@@ -1,6 +1,6 @@
 [Protocol]
-exec=vericoin-qt '%u'
-protocol=vericoin
+exec=roxycoin-qt '%u'
+protocol=roxycoin
 input=none
 output=none
 helper=true

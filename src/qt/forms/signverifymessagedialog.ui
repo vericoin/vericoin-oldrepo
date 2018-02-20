@@ -150,7 +150,7 @@
             </size>
            </property>
            <property name="toolTip">
-            <string>Sign the message to prove you own this VeriCoin address</string>
+            <string>Sign the message to prove you own this RoxyCoin address</string>
            </property>
            <property name="text">
             <string>&amp;Sign Message</string>
@@ -320,7 +320,7 @@
             </size>
            </property>
            <property name="toolTip">
-            <string>Verify the message to ensure it was signed with the specified VeriCoin address</string>
+            <string>Verify the message to ensure it was signed with the specified RoxyCoin address</string>
            </property>
            <property name="layoutDirection">
             <enum>Qt::LeftToRight</enum>

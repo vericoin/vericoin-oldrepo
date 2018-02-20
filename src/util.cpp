@@ -77,9 +77,9 @@ using namespace std;
 map<string, string> mapArgs;
 map<string, vector<string> > mapMultiArgs;
 #ifdef QT_GUI
-const char *walletUrl = "https://www.vericoin.info/";
-const char *walletDownloadsUrl = "https://www.vericoin.info/downloads/";
-const char *forumsUrl = "http://www.vericoinforums.com";
+const char *walletUrl = "https://www.roxycoin.info/";
+const char *walletDownloadsUrl = "https://www.roxycoin.info/downloads/";
+const char *forumsUrl = "http://www.roxycoinforums.com";
 bool fRestart = false;
 bool fRescan = false;
 bool fEncrypt = false;
@@ -1006,7 +1006,7 @@ static std::string FormatException(std::exception* pex, const char* pszThread)
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "vericoin";
+    const char* pszModule = "roxycoin";
 #endif
     if (pex)
         return strprintf(
@@ -1055,13 +1055,13 @@ void PrintExceptionContinue(std::exception* pex, const char* pszThread)
 boost::filesystem::path GetDefaultDataDir()
 {
     namespace fs = boost::filesystem;
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\VeriCoin
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\VeriCoin
-    // Mac: ~/Library/Application Support/VeriCoin
-    // Unix: ~/.vericoin
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\RoxyCoin
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\RoxyCoin
+    // Mac: ~/Library/Application Support/RoxyCoin
+    // Unix: ~/.roxycoin
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "VeriCoin";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "RoxyCoin";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -1073,10 +1073,10 @@ boost::filesystem::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     fs::create_directory(pathRet);
-    return pathRet / "VeriCoin";
+    return pathRet / "RoxyCoin";
 #else
     // Unix
-    return pathRet / ".vericoin";
+    return pathRet / ".roxycoin";
 #endif
 #endif
 }
@@ -1140,7 +1140,7 @@ boost::filesystem::path GetConfigFile()
 {
     namespace fs = boost::filesystem;
 
-    std::string conf("vericoin.conf");
+    std::string conf("roxycoin.conf");
     std::string confArg(GetArg("-conf", conf));
     fs::path pathConfigFile(confArg);
 
@@ -1184,7 +1184,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 
 boost::filesystem::path GetPidFile()
 {
-    boost::filesystem::path pathPidFile(GetArg("-pid", "vericoind.pid"));
+    boost::filesystem::path pathPidFile(GetArg("-pid", "roxycoind.pid"));
     if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
     return pathPidFile;
 }
@@ -1468,10 +1468,10 @@ void AddTimeData(const CNetAddr& ip, int64_t nTime)
                 if (!fMatch)
                 {
                     fDone = true;
-                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong VeriCoin will not work properly.");
+                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong RoxyCoin will not work properly.");
                     strMiscWarning = strMessage;
                     printf("*** %s\n", strMessage.c_str());
-                    uiInterface.ThreadSafeMessageBox(strMessage+" ", string("VeriCoin"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION);
+                    uiInterface.ThreadSafeMessageBox(strMessage+" ", string("RoxyCoin"), CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION);
                 }
             }
         }

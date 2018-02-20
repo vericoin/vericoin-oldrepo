@@ -330,7 +330,7 @@
      <item row="11" column="1">
       <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>Stay up to date with news, updates, media and learn more about VeriCoin.</string>
+        <string>Stay up to date with news, updates, media and learn more about RoxyCoin.</string>
        </property>
       </widget>
      </item>

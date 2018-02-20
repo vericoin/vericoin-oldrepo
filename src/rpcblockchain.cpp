@@ -388,8 +388,8 @@ Value bootstrap(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() > 1)
         throw runtime_error(
-            "bootstrap [overwrite_vericoin_conf=false]\n"
-            "Download blockchain and optionally a current vericoin.conf from www.vericoin.info.\n"
+            "bootstrap [overwrite_roxycoin_conf=false]\n"
+            "Download blockchain and optionally a current roxycoin.conf from www.roxycoin.info.\n"
             "Daemon exits when finished."
         );
 
@@ -400,7 +400,7 @@ Value bootstrap(const Array& params, bool fHelp)
 
     Object result;
     boost::filesystem::path pathBootstrapZip = GetDataDir() / "bootstrap.zip";
-    int err = DownloadFile("https://www.vericoin.info/downloads/bootstrap.zip", pathBootstrapZip);
+    int err = DownloadFile("https://www.roxycoin.info/downloads/bootstrap.zip", pathBootstrapZip);
     if (err != 0)
     {
         printf("bootstrap: Download failed!\n");
@@ -425,7 +425,7 @@ Value bootstrap(const Array& params, bool fHelp)
     StartShutdown();
 
     result.push_back(Pair("success", true));
-    result.push_back(Pair("comment", "Bootstrap successful; vericoind has been stopped, please restart."));
+    result.push_back(Pair("comment", "Bootstrap successful; roxycoind has been stopped, please restart."));
 
     return result;
 }

@@ -146,7 +146,7 @@ OBJS= \
     obj/scrypt.o \
     obj/miniunz.o
 
-all: vericoind
+all: roxycoind
 
 LIBS += $(CURDIR)/leveldb/libleveldb.a $(CURDIR)/leveldb/libmemenv.a
 DEFS += $(addprefix -I,$(CURDIR)/leveldb/include)
@@ -196,11 +196,11 @@ obj/%.o: %.cpp
 	      -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 	  rm -f $(@:%.o=%.d)
 
-vericoind: $(OBJS:obj/%=obj/%)
+roxycoind: $(OBJS:obj/%=obj/%)
 	$(LINK) $(xCXXFLAGS) -o $@ $^ $(xLDFLAGS) $(LIBS)
 
 clean:
-	-rm -f vericoind
+	-rm -f roxycoind
 	-rm -f obj/*.o
 	-rm -f obj/*.P
 	-rm -f obj/*.d

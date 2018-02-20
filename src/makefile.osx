@@ -3,7 +3,7 @@
 # Distributed under the MIT/X11 software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-# Mac OS X makefile for vericoin
+# Mac OS X makefile for roxycoin
 # Originally by Laszlo Hanyecz (solar@heliacal.net)
 
 CXX=llvm-g++
@@ -28,7 +28,7 @@ USE_AVX2:=0
 LIBS= -dead_strip
 
 ifdef STATIC
-# Build STATIC if you are redistributing the vericoind binary
+# Build STATIC if you are redistributing the roxycoind binary
 LIBS += \
  $(DEPSDIR)/lib/db48/libdb_cxx-4.8.a \
  $(DEPSDIR)/lib/libboost_system-mt.a \
@@ -115,7 +115,7 @@ ifeq (${USE_AVX2}, 1)
 	DEFS += -DUSE_AVX2
 endif
 
-all: vericoind
+all: roxycoind
 
 LIBS += $(CURDIR)/leveldb/libleveldb.a $(CURDIR)/leveldb/libmemenv.a
 DEFS += $(addprefix -I,$(CURDIR)/leveldb/include)
@@ -165,11 +165,11 @@ obj/%.o: %.cpp
 	      -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 	  rm -f $(@:%.o=%.d)
 
-vericoind: $(OBJS:obj/%=obj/%)
+roxycoind: $(OBJS:obj/%=obj/%)
 	$(CXX) $(CFLAGS) -o $@ $(LIBPATHS) $^ $(LIBS)
 
 clean:
-	-rm -f vericoind
+	-rm -f roxycoind
 	-rm -f obj/*.o
 	-rm -f obj/*.P
 	-rm -f obj/*.d

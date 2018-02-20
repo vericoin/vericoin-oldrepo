@@ -1,2 +1,2 @@
-debian/bin/vericoind usr/bin
-src/vericoind usr/lib/vericoin
+debian/bin/roxycoind usr/bin
+src/roxycoind usr/lib/roxycoin

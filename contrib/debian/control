@@ -1,4 +1,4 @@
-Source: vericoin
+Source: roxycoin
 Section: utils
 Priority: optional
 Maintainer: Jonas Smedegaard <dr@jones.dk>
@@ -19,11 +19,11 @@ Build-Depends: debhelper,
  libqt4-dev,
  libqrencode-dev
 Standards-Version: 3.9.2
-Homepage: http://www.vericoin.su/
-Vcs-Git: git://github.com/CryptoManiac/vericoin.git
-Vcs-Browser: http://github.com/CryptoManiac/vericoin
+Homepage: http://www.roxycoin.su/
+Vcs-Git: git://github.com/CryptoManiac/roxycoin.git
+Vcs-Browser: http://github.com/CryptoManiac/roxycoin
 
-Package: vericoind
+Package: roxycoind
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer network based digital currency - daemon
@@ -38,10 +38,10 @@ Description: peer-to-peer network based digital currency - daemon
  Full transaction history is stored locally at each client.  This
  requires 2+ GB of space, slowly growing.
  .
- This package provides vericoind, a combined daemon and CLI tool to
+ This package provides roxycoind, a combined daemon and CLI tool to
  interact with the daemon.
 
-Package: vericoin-qt
+Package: roxycoin-qt
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer network based digital currency - Qt GUI

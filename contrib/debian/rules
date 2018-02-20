@@ -5,29 +5,29 @@
 #build/bitcoind::
 #	$(if $(filter nocheck,$(DEB_BUILD_OPTIONS)),,src/test_bitcoin)
 
-DEB_INSTALL_EXAMPLES_vericoind += debian/examples/*
-DEB_INSTALL_MANPAGES_vericoind += debian/manpages/*
+DEB_INSTALL_EXAMPLES_roxycoind += debian/examples/*
+DEB_INSTALL_MANPAGES_roxycoind += debian/manpages/*
 
 %:
 	dh --with bash-completion $@
 
 override_dh_auto_build:
-	cd src; $(MAKE) -f makefile.unix vericoind
+	cd src; $(MAKE) -f makefile.unix roxycoind
 	$(MAKE)
 
 override_dh_auto_clean:
-	if [ -f Makefile ]; then $(MAKE) clean; else rm -rf build/; rm -f vericoin-qt; fi
+	if [ -f Makefile ]; then $(MAKE) clean; else rm -rf build/; rm -f roxycoin-qt; fi
 	cd src; $(MAKE) -f makefile.unix clean
 
 override_dh_auto_configure:
-	qmake vericoin-qt.pro USE_QRCODE=1
+	qmake roxycoin-qt.pro USE_QRCODE=1
 
 override_dh_auto_test:
-	cd src; $(MAKE) -f makefile.unix test_vericoin
-	src/test_vericoin
+	cd src; $(MAKE) -f makefile.unix test_roxycoin
+	src/test_roxycoin
 
 # Ensure wrapper is set executable
-binary-post-install/vericoind:
-	chmod +x $(cdbs_curdestdir)usr/bin/vericoind
-binary-post-install/vericoin-qt:
-	chmod +x $(cdbs_curdestdir)usr/bin/vericoin-qt
+binary-post-install/roxycoind:
+	chmod +x $(cdbs_curdestdir)usr/bin/roxycoind
+binary-post-install/roxycoin-qt:
+	chmod +x $(cdbs_curdestdir)usr/bin/roxycoin-qt

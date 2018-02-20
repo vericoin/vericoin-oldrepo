@@ -33,7 +33,7 @@ src/quazip/.qmake.stash
 *.patch
 .roxycoin
 .qmake.stash
-VeriCoin-Qt.app
+RoxyCoin-Qt.app
 #compilation and Qt preprocessor part
 *.qm
 Makefile

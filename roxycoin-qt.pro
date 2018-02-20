@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = vericoin-qt
+TARGET = roxycoin-qt
 VERSION = 1.7
 INCLUDEPATH += src src/json src/qt
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE __STDC_FORMAT_MACROS __STDC_LIMIT_MACROS
@@ -17,13 +17,13 @@ USE_AVX2 = 0
 # Profiling on linux
 #   Download, build and install: libunwind and gperftools
 #   Include the profiler header "gperftools/profiler.h" in the code to profile
-#   Bracket the code to profile with ProfileStart("vericoin-qt.prof") and ProfileStop() and recompile
-#   Run vericoin-qt through its paces then exit
+#   Bracket the code to profile with ProfileStart("roxycoin-qt.prof") and ProfileStop() and recompile
+#   Run roxycoin-qt through its paces then exit
 #   Analyze with:
-#      pprof ./vericoin-qt vericoin-qt.prof
+#      pprof ./roxycoin-qt roxycoin-qt.prof
 #   For a graphical view you need to: sudo apt-get install graphviz gv
 #   Then run:
-#      pprof --gv ./vericoin-qt vericoin-qt.prof
+#      pprof --gv ./roxycoin-qt roxycoin-qt.prof
 PROFILE = 0
 !macx:!windows:contains(PROFILE, 1) {
 DEFINES += PROFILER
@@ -522,8 +522,8 @@ macx:HEADERS += src/qt/macdockiconhandler.h
 macx:OBJECTIVE_SOURCES += src/qt/macdockiconhandler.mm
 macx:LIBS += -framework Foundation -framework ApplicationServices -framework AppKit
 macx:DEFINES += MAC_OSX MSG_NOSIGNAL=0
-macx:ICON = src/qt/res/icons/vericoin.icns
-macx:TARGET = "VeriCoin-Qt"
+macx:ICON = src/qt/res/icons/roxycoin.icns
+macx:TARGET = "RoxyCoin-Qt"
 macx:QMAKE_CFLAGS_THREAD += -pthread
 macx:QMAKE_LFLAGS_THREAD += -pthread
 macx:QMAKE_CXXFLAGS_THREAD += -pthread

@@ -9,16 +9,16 @@
 ; open the .iss file with Inno Setup and compile, output will go to a subfolder called \SETUP
 
 ; Choose a name that will match Program Files Folder, the Start Menu Items and the Uninstall Info
-#define ProgramName "VeriCoin"
+#define ProgramName "RoxyCoin"
 
 ; Enter the Version Number of your binaries
 #define VersionNumber "1.7"
 
 ; Enter the Name of the Folder created in \Appdata\Roaming where your binaries will place the user files, including wallet, conf file, blockchain info etc.
-#define RoamingName "VeriCoin"
+#define RoamingName "RoxyCoin"
 
 ; Enter the Name of the main QT-File
-#define QTexe "vericoin-qt.exe"
+#define QTexe "roxycoin-qt.exe"
 
 ; Subfolder with additional files such as an extra folder for daemon
 ; Do not include \ symbol it will be added later
@@ -26,11 +26,11 @@
 #define SubDir ""
 
 ; Enter the Name of the config file you wish to include                 
-#define configfile "vericoin.conf"
+#define configfile "roxycoin.conf"
 
 [Setup]
-AppPublisher=VeriCoin
-AppPublisherURL=http://www.vericoin.info/
+AppPublisher=RoxyCoin
+AppPublisherURL=http://www.roxycoin.info/
 AppName={#ProgramName}
 AppVersion={#VersionNumber}
 DefaultDirName={pf32}\{#ProgramName}

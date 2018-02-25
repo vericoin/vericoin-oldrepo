@@ -1118,7 +1118,10 @@ unsigned int ComputeMinWork(unsigned int nBase, int64_t nTime)
 //
 unsigned int ComputeMinStake(unsigned int nBase, int64_t nTime, unsigned int nBlockTime)
 {
-    return ComputeMaxBits(bnProofOfStakeLimit, nBase, nTime);
+    // With current parameters, Vericoin diff can drop very quickly, so there
+    // is little point in enforcing a minimum difficulty other than the global
+    // min diff
+    return bnProofOfStakeLimit.GetCompact();
 }
 
 

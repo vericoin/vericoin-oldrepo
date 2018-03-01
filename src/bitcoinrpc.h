@@ -130,7 +130,7 @@ extern mp_float GetDifficulty(const CBlockIndex* blockindex = NULL);
 
 extern double GetPoWMHashPS();
 extern mp_float GetPoSKernelPS();
-extern mp_float GetPoSKernelPS(CBlockIndex* pindexPrev);
+extern mp_float GetPoSKernelPS(CBlockIndex* pindexPrev, int nPoSInterval);
 
 extern std::string HexBits(unsigned int nBits);
 extern std::string HelpRequiringPassphrase();

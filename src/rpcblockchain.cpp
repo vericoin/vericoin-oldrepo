@@ -75,9 +75,8 @@ double GetPoWMHashPS()
     return GetDifficulty().convert_to<double>() * 4294.967296 / nTargetSpacingWork;
 }
 
-mp_float GetPoSKernelPS(CBlockIndex* pindexPrev)
+mp_float GetPoSKernelPS(CBlockIndex* pindexPrev, int nPoSInterval)
 {
-    int nPoSInterval = 72;
     mp_float dStakeKernelsTriedAvg = 0;
     int nStakesHandled = 0, nStakesTime = 0;
 
@@ -92,7 +91,6 @@ mp_float GetPoSKernelPS(CBlockIndex* pindexPrev)
             pindexPrevStake = pindexPrev;
             nStakesHandled++;
         }
-
         pindexPrev = pindexPrev->pprev;
     }
 
@@ -101,7 +99,7 @@ mp_float GetPoSKernelPS(CBlockIndex* pindexPrev)
 
 mp_float GetPoSKernelPS()
 {
-    return GetPoSKernelPS(pindexBest);
+    return GetPoSKernelPS(pindexBest,72);
 }
 
 Object blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool fPrintTransactionDetail)

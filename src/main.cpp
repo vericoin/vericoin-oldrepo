@@ -985,6 +985,7 @@ int64_t GetStakeTimeFactoredWeight(int64_t timeWeight, int64_t bnCoinDayWeight, 
 }
 
 // get average stake weight of last 60 blocks PoST
+// get average stake weight of last 500 blocks PoST2
 mp_float GetAverageStakeWeight(CBlockIndex* pindexPrev)
 {
     mp_float weightSum = 0, weightAve = 0;
@@ -998,15 +999,18 @@ mp_float GetAverageStakeWeight(CBlockIndex* pindexPrev)
     }
     nAverageStakeWeightHeightCached = pindexPrev->nHeight;
 
-    int i;
-    CBlockIndex* currentBlockIndex = pindexPrev;
-    for (i = 0; currentBlockIndex && i < 60; i++)
-    {
-        mp_float tempWeight = GetPoSKernelPS(currentBlockIndex);
-        weightSum += tempWeight;
-        currentBlockIndex = currentBlockIndex->pprev;
+    if (!PoST2protocol(pindexPrev->nHeight)){
+        int i;
+        CBlockIndex* currentBlockIndex = pindexPrev;
+        for (i = 0; currentBlockIndex && i < 60; i++)
+        {
+            mp_float tempWeight = GetPoSKernelPS(currentBlockIndex,72);
+            weightSum += tempWeight;
+            currentBlockIndex = currentBlockIndex->pprev;
+        }
+        weightAve = (weightSum/i)+21;
     }
-    weightAve = (weightSum/i)+21;
+    else{weightAve = GetPoSKernelPS(pindexPrev,500);}
 
     // Cache the stake weight value
     dAverageStakeWeightCached = weightAve;
@@ -1048,7 +1052,7 @@ int64_t GetProofOfStakeTimeReward(int64_t nStakeTime, int64_t nFees, CBlockIndex
 int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees, CBlockIndex* pindexPrev)
 {
     int64_t nSubsidy;
-    mp_float nNetworkWeight_ = GetPoSKernelPS(pindexPrev);
+    mp_float nNetworkWeight_ = GetPoSKernelPS(pindexPrev,72);
     if(nNetworkWeight_ < 21)
     {
         nSubsidy = 0;
@@ -1082,6 +1086,7 @@ int GetBlockRatePerHour()
 static const int64_t nTargetTimespan = 3 * 60;  // 3 mins
 #else
 static const int64_t nTargetTimespan = 16 * 60;  // 16 mins
+static const int64_t nTargetTimespanP2 = 256 * 60;  // 256 mins
 #endif
 
 //
@@ -1130,37 +1135,7 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfSta
     return pindex;
 }
 
-static unsigned int GetNextTargetRequiredV1(const CBlockIndex* pindexLast, bool fProofOfStake)
-{
-    CBigNum bnTargetLimit = fProofOfStake ? bnProofOfStakeLimit : bnProofOfWorkLimit;
-
-    if (pindexLast == NULL)
-        return bnTargetLimit.GetCompact(); // genesis block
-
-    const CBlockIndex* pindexPrev = GetLastBlockIndex(pindexLast, fProofOfStake);
-    if (pindexPrev->pprev == NULL)
-        return bnTargetLimit.GetCompact(); // first block
-    const CBlockIndex* pindexPrevPrev = GetLastBlockIndex(pindexPrev->pprev, fProofOfStake);
-    if (pindexPrevPrev->pprev == NULL)
-        return bnTargetLimit.GetCompact(); // second block
-
-    int64_t nActualSpacing = pindexPrev->GetBlockTime() - pindexPrevPrev->GetBlockTime();
-
-    // ppcoin: target change every block
-    // ppcoin: retarget with exponential moving toward target spacing
-    CBigNum bnNew;
-    bnNew.SetCompact(pindexPrev->nBits);
-    int64_t nInterval = nTargetTimespan / nTargetSpacing;
-    bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
-    bnNew /= ((nInterval + 1) * nTargetSpacing);
-
-    if (bnNew > bnTargetLimit)
-        bnNew = bnTargetLimit;
-
-    return bnNew.GetCompact();
-}
-
-static unsigned int GetNextTargetRequiredV2(const CBlockIndex* pindexLast, bool fProofOfStake)
+unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
 {
     CBigNum bnTargetLimit = fProofOfStake ? bnProofOfStakeLimit : bnProofOfWorkLimit;
 
@@ -1182,7 +1157,15 @@ static unsigned int GetNextTargetRequiredV2(const CBlockIndex* pindexLast, bool 
     // ppcoin: retarget with exponential moving toward target spacing
     CBigNum bnNew;
     bnNew.SetCompact(pindexPrev->nBits);
-    int64_t nInterval = nTargetTimespan / nTargetSpacing;
+
+    int64_t nInterval;
+    if (PoST2protocol(pindexPrev->nHeight)){
+        nInterval = nTargetTimespanP2 / nTargetSpacing;
+    }
+    else{
+        nInterval = nTargetTimespan / nTargetSpacing;
+    }
+
     bnNew *= ((nInterval - 1) * nTargetSpacing + nActualSpacing + nActualSpacing);
     bnNew /= ((nInterval + 1) * nTargetSpacing);
 
@@ -1190,17 +1173,6 @@ static unsigned int GetNextTargetRequiredV2(const CBlockIndex* pindexLast, bool 
         bnNew = bnTargetLimit;
 
     return bnNew.GetCompact();
-}
-
-
-unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfStake)
-{
-    if (pindexLast->nHeight < 38424)
-        return GetNextTargetRequiredV1(pindexLast, fProofOfStake);
-    else if (fTestNet)
-        return GetNextTargetRequiredV2(pindexLast, fProofOfStake);
-    else
-        return GetNextTargetRequiredV2(pindexLast, fProofOfStake);
 }
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits)

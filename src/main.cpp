@@ -1010,7 +1010,7 @@ mp_float GetAverageStakeWeight(CBlockIndex* pindexPrev)
         }
         weightAve = (weightSum/i)+21;
     }
-    else{weightAve = GetPoSKernelPS(pindexPrev,500);}
+    else{weightAve = max(GetPoSKernelPS(pindexPrev,500).convert_to<int64_t>(),(int64_t)180000);}
 
     // Cache the stake weight value
     dAverageStakeWeightCached = weightAve;

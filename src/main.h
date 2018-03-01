@@ -43,6 +43,7 @@ static const mp_float PI = mp_float("3.1415926535");
 
 inline bool PoSTprotocol(int nHeight) { return nHeight > 608100; }
 inline bool PoST2protocol(int nHeight) { return nHeight > 2400000; }
+static const int STAKE_MAX_AGE = 60 * 60 * 24 * 60; // stake age of max weight
 inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
 static const unsigned int LOCKTIME_THRESHOLD = 500000000; // Tue Nov  5 00:53:20 1985 UTC

@@ -34,9 +34,14 @@ int64_t GetWeight(int64_t nIntervalBeginning, int64_t nIntervalEnd, int64_t nVal
     int64_t timeWeight = nIntervalEnd - nIntervalBeginning - nStakeMinAge;
     if (PoSTprotocol(pindexPrev->nHeight+1))
     {
-        int64_t bnCoinDayWeight = nValueIn * timeWeight / COIN / (24 * 60 * 60);
-        int64_t factoredTimeWeight = GetStakeTimeFactoredWeight(timeWeight, bnCoinDayWeight, pindexPrev);
-        return factoredTimeWeight;
+        if (PoST2protocol(pindexPrev->nHeight+1)){
+            int64_t bnCoinDayWeight = nValueIn * timeWeight / COIN / (24 * 60 * 60);
+            int64_t factoredTimeWeight = GetStakeTimeFactoredWeight(timeWeight, bnCoinDayWeight, pindexPrev);
+            return min(factoredTimeWeight, (int64_t)STAKE_MAX_AGE);}
+        else{
+            int64_t bnCoinDayWeight = nValueIn * timeWeight / COIN / (24 * 60 * 60);
+            int64_t factoredTimeWeight = GetStakeTimeFactoredWeight(timeWeight, bnCoinDayWeight, pindexPrev);
+            return factoredTimeWeight;}
     }
     else{return timeWeight;}
 }

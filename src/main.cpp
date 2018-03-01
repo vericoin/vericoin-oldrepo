@@ -999,7 +999,7 @@ mp_float GetAverageStakeWeight(CBlockIndex* pindexPrev)
     }
     nAverageStakeWeightHeightCached = pindexPrev->nHeight;
 
-    if (!PoST2protocol(pindexPrev->nHeight)){
+    if (!PoST2protocol(pindexPrev->nHeight+1)){
         int i;
         CBlockIndex* currentBlockIndex = pindexPrev;
         for (i = 0; currentBlockIndex && i < 60; i++)
@@ -1162,7 +1162,7 @@ unsigned int GetNextTargetRequired(const CBlockIndex* pindexLast, bool fProofOfS
     bnNew.SetCompact(pindexPrev->nBits);
 
     int64_t nInterval;
-    if (PoST2protocol(pindexPrev->nHeight)){
+    if (PoST2protocol(pindexPrev->nHeight+1)){
         nInterval = nTargetTimespanP2 / nTargetSpacing;
     }
     else{
@@ -2002,11 +2002,17 @@ bool CTransaction::GetCoinAge(CTxDB& txdb, uint64_t& nCoinAge, CBlockIndex* pind
             continue; // only count coins meeting min age requirement
 
         int64_t nValueIn = txPrev.vout[txin.prevout.n].nValue;
-        int64_t timeWeight = nTime-txPrev.nTime;
+        int64_t timeWeight;
         if (PoSTprotocol(pindexPrev->nHeight+1)){
-            int64_t CoinDay = nValueIn * timeWeight / COIN / (24 * 60 * 60);
-            int64_t factoredTimeWeight = GetStakeTimeFactoredWeight(timeWeight, CoinDay, pindexPrev);
-            bnCoinDay += CBigNum(nValueIn) * factoredTimeWeight / COIN / (24 * 60 * 60);
+            if (PoST2protocol(pindexPrev->nHeight+1)){
+                timeWeight = GetWeight(txPrev.nTime,nTime,nValueIn,pindexPrev);
+                bnCoinDay += CBigNum(nValueIn) * timeWeight / COIN / (24 * 60 * 60);
+            }
+            else{
+                timeWeight=nTime-txPrev.nTime;
+                int64_t CoinDay = nValueIn * timeWeight / COIN / (24 * 60 * 60);
+                int64_t factoredTimeWeight = GetStakeTimeFactoredWeight(timeWeight, CoinDay, pindexPrev);
+                bnCoinDay += CBigNum(nValueIn) * factoredTimeWeight / COIN / (24 * 60 * 60);}
         }
         else{
             bnCentSecond += CBigNum(nValueIn) * timeWeight / CENT;}

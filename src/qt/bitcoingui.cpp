@@ -1494,7 +1494,7 @@ void BitcoinGUI::updateStakingIcon()
     pwalletMain->GetStakeWeight(*pwalletMain, nWeight);
     progressBar->setVisible(false);
     overviewPage->showOutOfSyncWarning(false);
-    double nNetworkWeight = GetPoSKernelPS().convert_to<double>();
+    double nNetworkWeight = boost::rational_cast<double>(GetPoSKernelPS());
     if (walletModel->getEncryptionStatus() == WalletModel::Unlocked && nWeight)
     {
         u_int64_t nEstimateTime = nTargetSpacing * nNetworkWeight / nWeight;

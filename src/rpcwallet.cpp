@@ -82,19 +82,19 @@ Value getinfo(const Array& params, bool fHelp)
     obj.push_back(Pair("proxy",         (proxy.first.IsValid() ? proxy.first.ToStringIPPort() : string())));
     obj.push_back(Pair("ip",            addrSeenByPeer.ToStringIP()));
 
-    diff.push_back(Pair("proof-of-work",  GetDifficulty().convert_to<double>()));
-    diff.push_back(Pair("proof-of-stake", GetDifficulty(GetLastBlockIndex(pindexBest, true)).convert_to<double>()));
+    diff.push_back(Pair("proof-of-work",  boost::rational_cast<double>(GetDifficulty())));
+    diff.push_back(Pair("proof-of-stake", boost::rational_cast<double>(GetDifficulty(GetLastBlockIndex(pindexBest, true)))));
     
     obj.push_back(Pair("difficulty",    diff));
 
     if (PoSTprotocol(pindexBest->nHeight))
     {
-        double nNetworkWeight = GetAverageStakeWeight(pindexBest->pprev).convert_to<double>();
+        double nNetworkWeight = boost::rational_cast<double>(GetAverageStakeWeight(pindexBest->pprev));
         obj.push_back(Pair("networkweight", nNetworkWeight));
         if (nNetworkWeight > 0)
         {
-            obj.push_back(Pair("inflationrate", GetCurrentInflationRate(GetAverageStakeWeight(pindexBest->pprev)).convert_to<double>()));
-            obj.push_back(Pair("interestrate",  GetCurrentInterestRate(pindexBest->pprev).convert_to<double>()));
+            obj.push_back(Pair("inflationrate", boost::rational_cast<double>(GetCurrentInflationRate(GetAverageStakeWeight(pindexBest->pprev)))));
+            obj.push_back(Pair("interestrate",  boost::rational_cast<double>(GetCurrentInterestRate(pindexBest->pprev))));
         }
         else
         {
@@ -122,7 +122,7 @@ Value getnetworkweight(const Array& params, bool fHelp)
             "getnetworkweight\n"
             "Returns the current average stake weight.");
 
-    return (GetAverageStakeWeight(pindexBest->pprev)).convert_to<double>();
+    return boost::rational_cast<double>(GetAverageStakeWeight(pindexBest->pprev));
 }
 
 Value getinflationrate(const Array& params, bool fHelp)
@@ -132,7 +132,7 @@ Value getinflationrate(const Array& params, bool fHelp)
             "getinflationrate\n"
             "Returns the current inflation rate.");
 
-    return (GetCurrentInflationRate(GetAverageStakeWeight(pindexBest->pprev))).convert_to<double>();
+    return boost::rational_cast<double>(GetCurrentInflationRate(GetAverageStakeWeight(pindexBest->pprev)));
 }
 
 Value getinterestrate(const Array& params, bool fHelp)
@@ -143,9 +143,9 @@ Value getinterestrate(const Array& params, bool fHelp)
             "Returns the current staking interest rate.");
 
     if (PoSTprotocol(pindexBest->nHeight))
-        return (GetCurrentInterestRate(pindexBest->pprev)).convert_to<double>();
+        return boost::rational_cast<double>(GetCurrentInterestRate(pindexBest->pprev));
     else
-        return (GetCurrentInflationRate(GetAverageStakeWeight(pindexBest->pprev))).convert_to<double>();
+        return boost::rational_cast<double>(GetCurrentInflationRate(GetAverageStakeWeight(pindexBest->pprev)));
 }
 
 Value getnewpubkey(const Array& params, bool fHelp)

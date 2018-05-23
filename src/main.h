@@ -28,8 +28,8 @@ class CInv;
 class CRequestTracker;
 class CNode;
 
-static const int LAST_POW_BLOCK = 20160;             // If you change this, or mining rewards, adjust INITIAL_COIN_SUPPLY
-static const int64_t INITIAL_COIN_SUPPLY = 26751452; // Used in calculating interest rate
+static const int LAST_POW_BLOCK = 200; //20160;             // If you change this, or mining rewards, adjust INITIAL_COIN_SUPPLY
+static const int64_t INITIAL_COIN_SUPPLY = LAST_POW_BLOCK*100000; //26751452; // Used in calculating interest rate
 
 static const unsigned int MAX_BLOCK_SIZE = 1000000;
 static const unsigned int MAX_BLOCK_SIZE_GEN = MAX_BLOCK_SIZE/2;
@@ -39,10 +39,10 @@ static const unsigned int MAX_INV_SZ = 50000;
 static const int64_t MIN_TX_FEE = 10000;
 static const int64_t MIN_RELAY_TX_FEE = MIN_TX_FEE;
 static const int64_t MAX_MONEY = std::numeric_limits<int64_t>::max();
-static const mp_float PI = mp_float("3.1415926535");
+static const mp_float PI = mp_float(31415926535ll, 10000000000ll);
 
-inline bool PoSTprotocol(int nHeight) { return nHeight > 608100; }
-inline bool PoST2protocol(int nHeight) { return nHeight > 2400000; }
+inline bool PoSTprotocol(int nHeight) { return nHeight > 200; }
+inline bool PoST2protocol(int nHeight) { return nHeight > 200; }
 static const int STAKE_MAX_AGE = 60 * 60 * 24 * 60; // stake age of max weight
 inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.

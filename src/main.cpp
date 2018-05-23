@@ -978,10 +978,32 @@ int64_t GetStakeTimeFactoredWeight(int64_t timeWeight, int64_t bnCoinDayWeight, 
     }
     else
     {
-        mp_float stakeTimeFactor = pow(cos((PI*weightFraction)),2.0);
-        factoredTimeWeight = (stakeTimeFactor*timeWeight).convert_to<int64_t>();
+        //mp_float stakeTimeFactor = pow(cos((PI*weightFraction)),2.0);
+        mp_float stakeTimeFactor = 1 - 20*weightFraction/9;
+        if (stakeTimeFactor < 0)
+            stakeTimeFactor = 0;
+
+        factoredTimeWeight = boost::rational_cast<int64_t>(stakeTimeFactor*timeWeight);
     }
     return factoredTimeWeight;
+}
+
+
+static const mp_float l2e = mp_float(36744,25469);
+
+mp_float log2(long long a) 
+{
+    return sizeof(long long)*8 - 1 - __builtin_clzll(a);
+}
+
+mp_float log2(mp_float a)
+{
+    return log2(a.numerator()) - log2(a.denominator());
+}
+
+mp_float log(mp_float a)
+{
+    return log2(a)/l2e;
 }
 
 // get average stake weight of last 60 blocks PoST
@@ -1010,7 +1032,9 @@ mp_float GetAverageStakeWeight(CBlockIndex* pindexPrev)
         }
         weightAve = (weightSum/i)+21;
     }
-    else{weightAve = max(GetPoSKernelPS(pindexPrev,500).convert_to<int64_t>(),(int64_t)180000);}
+    else{weightAve = max(boost::rational_cast<int64_t>(GetPoSKernelPS(pindexPrev,500)),(int64_t)180000);}
+
+    printf("weightAve: %lld/%lld", weightAve.numerator(), weightAve.denominator());
 
     // Cache the stake weight value
     dAverageStakeWeightCached = weightAve;
@@ -1039,7 +1063,7 @@ mp_float GetCurrentInterestRate(CBlockIndex* pindexPrev)
 // Stakers coin reward based on coin stake time factor and targeted inflation rate PoST
 int64_t GetProofOfStakeTimeReward(int64_t nStakeTime, int64_t nFees, CBlockIndex* pindexPrev)
 {
-    int64_t nInterestRate = (GetCurrentInterestRate(pindexPrev)*CENT).convert_to<int64_t>();
+    int64_t nInterestRate = boost::rational_cast<int64_t>(GetCurrentInterestRate(pindexPrev)*CENT);
     int64_t nSubsidy = nStakeTime * nInterestRate * 33 / (365 * 33 + 8);
 
     if (fDebug && GetBoolArg("-printcreation"))
@@ -1059,7 +1083,7 @@ int64_t GetProofOfStakeReward(int64_t nCoinAge, int64_t nFees, CBlockIndex* pind
     }
     else
     {
-        int64_t nInterestRate = ((17*(log(nNetworkWeight_/20)))*10000).convert_to<int64_t>();
+        int64_t nInterestRate = boost::rational_cast<int64_t>((17*(log(nNetworkWeight_/20)))*10000);
         nSubsidy = (nCoinAge * (nInterestRate) * 33 / (365 * 33 + 8));
     }
     if (fDebug && GetBoolArg("-printcreation"))
@@ -3834,7 +3858,7 @@ uint64_t GetTimeToStake()
     mp_float nNetworkWeight = GetPoSKernelPS();
     if (nWeight != 0)
     {
-        nEstimateTime = (nTargetSpacing * nNetworkWeight / nWeight).convert_to<int64_t>();
+        nEstimateTime = boost::rational_cast<int64_t>(nTargetSpacing * nNetworkWeight / nWeight);
     }
     return nEstimateTime;
 }

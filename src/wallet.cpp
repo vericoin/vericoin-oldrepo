@@ -1540,7 +1540,7 @@ bool CWallet::GetStakeWeight(const CKeyStore& keystore, uint64_t& nWeight)
 
 int CWallet::StakeTimeEarned(uint64_t nWeight, CBlockIndex* pindexPrev)
 {
-    int factor;
+    int factor_int;
     mp_float weightFraction = (nWeight+1) / (GetAverageStakeWeight(pindexPrev));
     // This function is only used in updateStakingIcon(),
     // so we don't care if the weightFraction is > 0.45.
@@ -1550,9 +1550,13 @@ int CWallet::StakeTimeEarned(uint64_t nWeight, CBlockIndex* pindexPrev)
     //}
     //else
     {
-        factor = ((pow(cos((PI*weightFraction)),2.0))*100).convert_to<int>();
+//        mp_float factor = pow(cos((PI*weightFraction)),2.0);
+        mp_float factor = 1 - 20*weightFraction/9;
+        if (factor < 0)
+            factor = 0;
+        factor_int = boost::rational_cast<int>(factor*100);        
     }
-    return factor;
+    return factor_int;
 }
 
 bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int64_t nSearchInterval, int64_t nFees, CTransaction& txNew, CKey& key)

@@ -44,15 +44,15 @@ Value getmininginfo(const Array& params, bool fHelp)
 
     uint64_t nWeight = 0;
     pwalletMain->GetStakeWeight(*pwalletMain, nWeight);
-    double averageStakeWeight = GetAverageStakeWeight(pindexBest->pprev).convert_to<double>();
+    double averageStakeWeight = boost::rational_cast<double>(GetAverageStakeWeight(pindexBest->pprev));
 
     Object obj, diff, weight;
     obj.push_back(Pair("blocks",        (int)nBestHeight));
     obj.push_back(Pair("currentblocksize",(uint64_t)nLastBlockSize));
     obj.push_back(Pair("currentblocktx",(uint64_t)nLastBlockTx));
 
-    diff.push_back(Pair("proof-of-work",        GetDifficulty().convert_to<double>()));
-    diff.push_back(Pair("proof-of-stake",       GetDifficulty(GetLastBlockIndex(pindexBest, true)).convert_to<double>()));
+    diff.push_back(Pair("proof-of-work",        boost::rational_cast<double>(GetDifficulty())));
+    diff.push_back(Pair("proof-of-stake",       boost::rational_cast<double>(GetDifficulty(GetLastBlockIndex(pindexBest, true)))));
     diff.push_back(Pair("search-interval",      (int)nLastCoinStakeSearchInterval));
     obj.push_back(Pair("difficulty",    diff));
 
@@ -64,8 +64,8 @@ Value getmininginfo(const Array& params, bool fHelp)
 
     weight.push_back(Pair("combined",  (uint64_t)nWeight));
     obj.push_back(Pair("stakeweight", weight));
-    obj.push_back(Pair("stakeinterest",    GetCurrentInterestRate(pindexBest).convert_to<double>()));
-    obj.push_back(Pair("stakeinflation",    GetCurrentInflationRate(averageStakeWeight).convert_to<double>()));
+    obj.push_back(Pair("stakeinterest",    boost::rational_cast<double>(GetCurrentInterestRate(pindexBest))));
+    obj.push_back(Pair("stakeinflation",    boost::rational_cast<double>(GetCurrentInflationRate(averageStakeWeight))));
     obj.push_back(Pair("blocksperhour", GetBlockRatePerHour()));
     obj.push_back(Pair("testnet",       fTestNet));
     return obj;

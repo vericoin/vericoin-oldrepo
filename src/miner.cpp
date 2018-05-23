@@ -546,6 +546,8 @@ void StakeMiner(CWallet *pwallet)
                 return;
         }
 
+        printf("Creating new block\n");
+
         //
         // Create new block
         //

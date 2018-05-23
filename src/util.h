@@ -35,9 +35,12 @@
 #include <stdint.h>
 #include <inttypes.h>
 
-#include <boost/multiprecision/cpp_bin_float.hpp>
+//#include <boost/multiprecision/cpp_bin_float.hpp>
+#include <boost/rational.hpp>
 
-typedef boost::multiprecision::cpp_bin_float_100 mp_float;
+//typedef boost::multiprecision::cpp_bin_float_100 mp_float;
+typedef boost::rational<long long> mp_float;
+
 
 static const int64_t COIN = 100000000;
 static const int64_t CENT = 1000000;

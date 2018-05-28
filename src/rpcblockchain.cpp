@@ -319,6 +319,7 @@ int DownloadFile(std::string url, boost::filesystem::path target_file_path)
     curl_easy_setopt(curlHandle, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curlHandle, CURLOPT_NOPROGRESS, 1L);
     curl_easy_setopt(curlHandle, CURLOPT_WRITEFUNCTION, write_data);
+	curl_easy_setopt(curlHandle, CURLOPT_FOLLOWLOCATION, 1L); 
 
     FILE *file = fopen(target_file_path.c_str(), "wb");
     if(file)
@@ -400,7 +401,7 @@ Value bootstrap(const Array& params, bool fHelp)
 
     Object result;
     boost::filesystem::path pathBootstrapZip = GetDataDir() / "bootstrap.zip";
-    int err = DownloadFile("https://www.vericoin.info/downloads/bootstrap.zip", pathBootstrapZip);
+    int err = DownloadFile("http://cdn.vericonomy.com/bootstrap.zip", pathBootstrapZip);
     if (err != 0)
     {
         printf("bootstrap: Download failed!\n");
